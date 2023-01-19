@@ -4,6 +4,8 @@ server:
     encoding:
       charset: utf-8
       force: true
+    session:
+      timeout: 1
 
 spring:
   mvc:
