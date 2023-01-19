@@ -21,6 +21,12 @@ public class UserController {
     @Autowired
     private HttpSession session;
 
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate(); // 세션 Id 삭제
+        return "redirect:/";
+    }
+
     @GetMapping("/loginForm")
     public String loginForm(HttpServletRequest request) {
         // JSESSIONID=4F7CF117FEC7FD6194C3FC1F708F17F6; remember=ssar
