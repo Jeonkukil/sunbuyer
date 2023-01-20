@@ -8,4 +8,16 @@
 <insert id="insert">
 		insert into purchase_tb(user_id, product_id, count, created_at) values(#{userId}, #{productId}, #{count}, now());
 </insert>
+
+<select id="findByUserId" resultType="shop.mtcoding.buyer.dto.PurchaseAllDto">
+select pu.id, u.username, pr.name, pu.count
+from (select *
+from purchase_tb
+where user_id = #{userId}) pu
+inner join user_tb u
+on pu.user_id = u.id
+inner join product_tb pr
+on pr.id = pu.product_id
+</select>
+
 </mapper>

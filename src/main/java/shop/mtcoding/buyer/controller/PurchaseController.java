@@ -1,11 +1,16 @@
 package shop.mtcoding.buyer.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import shop.mtcoding.buyer.dto.PurchaseAllDto;
 import shop.mtcoding.buyer.model.ProductRepository;
 import shop.mtcoding.buyer.model.PurchaseRepository;
 import shop.mtcoding.buyer.model.User;
@@ -29,6 +34,19 @@ public class PurchaseController {
     /*
      * 목적 : 세션이 있는지 체크, 구매 히스토리 남기기, 재고 수량 변경
      */
+
+    @GetMapping("/purchase")
+    public String purchase(Model model) {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            return "redirect:/notfound";
+        }
+        List<PurchaseAllDto> productList = purchaseRepository.findByUserId(principal.getId());
+        model.addAttribute("purchaseList", productList);
+
+        return "purchase/list";
+    }
+
     @PostMapping("/purchase/insert")
     public String insert(int productId, int count) {
         // 1. 세션이 있는지 체크
