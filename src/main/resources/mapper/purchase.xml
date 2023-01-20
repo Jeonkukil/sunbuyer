@@ -5,4 +5,7 @@
 
 <mapper namespace="shop.mtcoding.buyer.model.PurchaseRepository">
 
+<insert id="insert">
+		insert into purchase_tb(user_id, product_id, count, created_at) values(#{userId}, #{productId}, #{count}, now());
+</insert>
 </mapper>
